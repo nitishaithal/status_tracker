@@ -1,7 +1,18 @@
+
+The procedure I tried to add memebers to the project. But I am unable to pass the user_id to the projects_controller
+
 project -> show.html.erb -> rendering a partial called _add_members.html.erb
 
 >) In the partial _add_members.html.erb displaying all the username to add to the project
 
 >) The username is linked and is passed to the projects_controller.rb's with the project_id and user_id as parameters. (Error: unknown variable name: user_id)
 
->) In project_controller.rb assign the project_id to the id of the users_project, the userid to the user_id of the user_project.
+>)In project_controller.rb assign the project_id to the id of the users_project, the userid to the user_id of the user_project.
+
+>) I have created tabs in the header which somehow works fine when run locally but the tabs don't open up when run on c9.
+
+
+>) Add members and a search bar and list all the users that are searched name and e-mail and return it in an array
+
+
+>) 

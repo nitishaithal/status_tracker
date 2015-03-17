@@ -1,8 +1,8 @@
-<%= simple_form_for @project do |f| %>
-	<% @user.each do |user| %>
-			<br/>
-			<% @user = User.all %>
-				 <%= f.hidden_field :project_id, :value => @project.id %>
-			<%= link_to user.username, {:controller => "projects", :action => "create", :project_id => @project.id }%>
-		<%end %>
-<% end %>
+<% @users.each do |user| %>
+	<%= form_for :project, url: "/projects/#{@project.id}/add_members" do |f| %>
+				<%= f.hidden_field :user_id, :value => user.id %>
+				<%=  user.username %>
+				<%= f.submit 'add' %>
+	<% end %>
+	<br/>
+<%end %>

@@ -1,11 +1,20 @@
 <br/><br/><br/><br/>
+  
+ 
 <h1>List of the user Registered</h1>
 <div class="usernames">
-		<% @user.each do |user| %>
+		<% @users.each do |user| %>
 			<br/>
 			<%= link_to user.username.upcase  %>
+			
 		<%end %>
 </div>
 <div class="page">
-	<%= will_paginate @user%>
+	<%= will_paginate @users %>
 </div>
+<%= form_tag 'dashboard', :method => 'get', :id => 'users_search' do %>
+    <p>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "Search", :name => nil %>
+    </p>
+<% end %>

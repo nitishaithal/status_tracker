@@ -15,6 +15,7 @@ gem 'devise', '~> 3.4.1'
 gem 'bootstrap-sass',       '3.2.0.2'
 gem 'gravatarify', '~>3.0.0'
 gem 'simple_form', '~>3.0.2'
+gem 'ransack'
 group :development, :testem do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

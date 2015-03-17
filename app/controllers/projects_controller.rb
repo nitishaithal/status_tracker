@@ -20,12 +20,23 @@ class ProjectsController < ApplicationController
 
 	def show
 		#@user = User.find(params[:id])
-		@user = User.all
 		@project = Project.find(params[:id])
+		@proj_users = @project.users
+		@users = User.where('id not in (?) ', @proj_users.map {|user| user.id })
 		#UserProject.create(user_id: @user.id, project_id: @project.id, admin: false )
 	end
 
 	def edit
+	end
+
+	def add_members
+		@project = Project.find(params[:id])
+		UserProject.create(user_id: params[:project][:user_id], project_id: params[:id], admin: false)
+		respond_to do |format|
+		    format.html { redirect_to @project }
+		    format.json { render :json => @project.to_json }
+  		end
+		
 	end
 
 	private

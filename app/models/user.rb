@@ -18,4 +18,7 @@ class User < ActiveRecord::Base
    has_many :posts
    has_many :comments
 
+  def self.search(query)
+    where("email like ? or username like ?", "%#{query}%","%#{query}%") 
+  end
 end

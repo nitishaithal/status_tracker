@@ -50,7 +50,8 @@ h1 {
 
 .field {
 	font-family: Arvo;
-	text-align: center;
+
+  text-align: justify;
 	color:		#20B2AA;
 }
 .txt{
@@ -342,3 +343,18 @@ form:after {
   .fonter {
   font-size: 2em
   }
+  .name {
+    font-family: Arvo;
+    color:    #20B2AA;
+  }
+
+  .menu {
+      float:left;
+      width:20%;
+      height:80%;
+    }
+    .mainContent {
+      float:left;
+      width:75%;
+      height:80%;
+    }
