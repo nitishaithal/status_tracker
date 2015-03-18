@@ -1,11 +1,10 @@
- <div style="margin: 50px;">
-<div> Title:  <%= @post.title %></div>
-<div> Content: <%= @post.content %></div>
-  <%= render @post.comments %>
-   reply to the thread
-  <%= render "comments/form" %>
- </div>
+<div style="margin: 50px;">
+	<div> Title:  <%= @post.title %></div>
+	<div> Content: <%= @post.content %></div>
+  	<%= render @post.comments %>
+   	reply to the thread
+  	<%= render "comments/form" %>
+</div>
 
 <%= link_to "Edit", edit_post_path(@post) %>
-
 <%= link_to "home", root_path %>

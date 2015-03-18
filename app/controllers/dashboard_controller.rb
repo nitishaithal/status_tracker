@@ -5,5 +5,8 @@ class DashboardController < ApplicationController
 		#@user=User.paginate(:page => params[:page], :per_page => 30)
 		@users = User.search(params[:search]).paginate(:page => params[:page], :per_page => 5)
 	end
-	
+	def new
+		@user = current_user
+		@projects = @user.projects
+	end
 end
