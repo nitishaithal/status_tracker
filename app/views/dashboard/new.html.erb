@@ -1,30 +1,27 @@
-<div class ="printing">
+
 	<div class ="menu">
-		<% @user = User.all %>
-		<% @user.find(current_user.id).email %>
-		<% provide(:title, @user.find(current_user.id).email) %>
-		<br/> <br/>
-		<%= gravatar_for @user %><br/><br/>
+		<% @user.email %>
+		<% provide(:title, @user.email) %>
+		
+		<%= gravatar_for @user %>
 		<div class ="name">
-			<td><%= @user.find(current_user.id).username.upcase %><br/>
+			<td><%= @user.username.upcase %>
 		</div>
 	</div>
 	<div class ="main-content">
 		<h4>
 			<u>Title</u>:
-			<%= link_to @user.find(current_user.id).title, :action => "index", :controller => "posts"%>
+			<%= link_to @user.title, :action => "index", :controller => "posts"%>
 		</h4>
 		<h4>
 			<u> About Me</u>:
-			<%=@user.find(current_user.id).description %>
+			<%=@user.description %>
 		</h4>	
-		<div class ="field">
-			<h1>Projects </h1>
-			<% @projects = Project.all %>
-			<% @prjs = @projects.find(current_user.projects)%>
-			<% @prjs.each do |t| %>
-			 	 <%= t.title %><br/>
+		<div class="field">
+			<h1>Projects</h1>
+			<% @projects.each do |project| %>
+			 	 <%= project.title %><br/>
 			<% end %>			
 		</div>
 	</div>
-</div>
+
