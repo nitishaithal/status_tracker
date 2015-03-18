@@ -9,5 +9,8 @@ class DashboardController < ApplicationController
 		@user = current_user
 		@projects = @user.projects
 	end
+<<<<<<< HEAD
 	
+=======
+>>>>>>> fb7f290fdfa7c51f296559f62bc7840816fbfc37
 end

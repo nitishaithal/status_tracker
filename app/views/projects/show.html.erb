@@ -6,7 +6,7 @@
 <% @project.users.each do |user| %>
 <h6><%= user.username %></h6>
 <% end %>
-
+<%= link_to "Edit", :action => "edit" %>
 <%= link_to "View all posts", :action => "index", :controller => "posts"%><br/>
 <div class ="printing">
 <%= simple_form_for Post.new do |f| %>
