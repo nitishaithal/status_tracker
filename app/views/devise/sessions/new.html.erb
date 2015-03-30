@@ -1,33 +1,48 @@
-<br/>
-<br/>
-<div class ="back">
-<div class ="container">
-<h2>Log in</h2>
-<meta charset="utf-8">
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
- <div class="container">
-  <section id="content">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-
-  <div>
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div>
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => 'form'}) do |f| %>
+<div class="modal">
+  <div class="modal-dialog top--50">
+    <div class="modal-content col-xs-offset-1 col-xs-10">
+      <div class="modal-header">
+       
+        <h2 class="modal-title">Log in</h2>
+      </div>
+      <div class="modal-body">
+          <%= devise_error_messages! %>
+          <div class="form-group">
+            <%= f.label :email , class: "sr-only" %>
+            <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email" %>
+          </div>
+        
+          <div class="form-group">
+            <%= f.label :password , class: "sr-only" %>
+            <%= f.password_field :password, autocomplete: "off" , class: "form-control", placeholder: "Password" %>
+          </div>
+        
+          <% if devise_mapping.rememberable? %>
+            <div class="">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me, class: "text-muted" %>
+              </div>
+          <% end %>
+      </div>
+      <div class="modal-footer">
+        
+  			<%= link_to "sign up", new_user_registration_path, class: "btn btn-success pull-left" %>
+        <%= f.submit "Log in", class: "btn btn-primary" %>
+        
+      </div>
     </div>
-  <% end -%>
-
-  <div class="button">
-    <%= f.submit "Log in" %>
-  </div>
-</section>
+  </div>  
 </div>
 <% end %>
-</div>
-</div>
+<script>
+  $(document).ready(function(){
+    $(".modal").modal({
+      keyboard: false,
+      backdrop: 'static',
+      show: true
+    });
+    $("body").addClass('bg-img')
+    $("body").addClass('img-responsive')
+  });
+</script>

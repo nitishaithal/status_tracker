@@ -11,15 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150313052206) do
-
-  create_table "add_project_id_to_posts", force: :cascade do |t|
-    t.integer  "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "add_project_id_to_posts", ["project_id"], name: "index_add_project_id_to_posts_on_project_id"
+ActiveRecord::Schema.define(version: 20150327044003) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "comment"
@@ -46,10 +38,12 @@ ActiveRecord::Schema.define(version: 20150313052206) do
   create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
+    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "user_id"
   end
+
+  add_index "projects", ["user_id"], name: "index_projects_on_user_id"
 
   create_table "user_projects", force: :cascade do |t|
     t.integer  "user_id"
@@ -78,6 +72,8 @@ ActiveRecord::Schema.define(version: 20150313052206) do
     t.string   "username"
     t.text     "description"
     t.string   "title"
+    t.string   "gender"
+    t.date     "birthday"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

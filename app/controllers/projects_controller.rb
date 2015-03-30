@@ -29,6 +29,16 @@ class ProjectsController < ApplicationController
 	def edit
 		@project = Project.find(params[:id])
 	end
+	
+	def update
+		@project = Project.find(params[:id])
+		@project.update_attributes(project_params)
+		@project.save
+		respond_to do |format|
+		    format.html { redirect_to @project }
+		    format.json { render :json => @project.to_json }
+  		end
+	end
 
 	def add_members
 		@project = Project.find(params[:id])
@@ -40,6 +50,12 @@ class ProjectsController < ApplicationController
 		
 	end
 
+	def destroy
+		@project = Project.find(params[:id])
+		@project.destroy
+		redirect_to root_path
+	end
+	
 	private
 
 	def project_params

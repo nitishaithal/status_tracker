@@ -1,9 +1,39 @@
-	<%= simple_form_for @project do |f| %>
-		<div class ="css-input">
-		<div class ="field">
-			<%= f.input :title %><br/>
-			<%= f.input :description %><br/>
-			<%= f.submit %>
-		</div>
-		</div>
-	<% end %>
+<%= simple_form_for Project.new , :html=> {:class => 'form'} do |f| %>
+    <div class="modal " id="create_project_modal" data-backdrop="static" >
+      <div class="modal-dialog">
+        <div class="modal-content col-xs-offset-1 col-xs-10">
+          <div class="modal-header">
+          	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2 class="modal-title">Create Project</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="form-group">
+              <%=f.label :title, class: "sr-only" %>
+                <%=f.text_field :title, autofocus: true, class: "form-control", placeholder: "Title",  id: "proj_create" , "data-provider" =>:proj  %>
+            </div>
+            <div class="form-group">
+              <%=f.label :description,class: "sr-only" %>
+                <%=f.text_area :description,class: "form-control", placeholder: "Description" %>
+            </div>
+
+            <div class="modal-footer">
+             <button type="reset" class="pull-left btn btn-default" >Reset</button>
+              <%= f.submit "Create", class: "btn btn-primary", disabled: "disabled", id: "proj_create_btn" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
+<script>
+  //disabling the create button of the project if the length of the project is < 1
+
+  $("#proj_create").keyup(function() {
+  if($(this).val().length < 1) {
+    $("#proj_create_btn").attr("disabled","disabled");
+  } else {
+    $("#proj_create_btn").removeAttr("disabled");
+  }
+});
+</script>

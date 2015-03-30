@@ -1,8 +1,18 @@
+<ul class="user-list">
 <% @users.each do |user| %>
 	<%= form_for :project, url: "/projects/#{@project.id}/add_members" do |f| %>
 				<%= f.hidden_field :user_id, :value => user.id %>
-				<%=  user.username %>
-				<%= f.submit 'add' %>
+			        <li class="user-list-item">
+							<%= f.submit '+', class: "pull-right mt15 mr5 btn-xs btn-success btn-outline glyphicon glyphicon-plus" %>
+			        	<span class="pull-left">
+			        		<%= image_tag(gravatar_url_for( user, "50"), alt: user.username, class: "img-thumbnail ", title: user.username.upcase) %>
+				        </span>	
+				        <div class="ml5 pull-left mt10">
+				        	<div><%=  user.username %></div>
+				        	<div class="color-gray font-12 "><%=  user.email %></div>
+				        </div>
+						<span class="clearfix"></span>
+					</li>
 	<% end %>
-	<br/>
 <%end %>
+</ul>

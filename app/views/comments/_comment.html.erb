@@ -1,4 +1,6 @@
 <div class ="printing">
 <p><%= comment.comment %><br/>
 <%= comment.user.username.upcase%></p>
+<%= link_to "edit", edit_post_comment_path(comment.post, comment) %>
+<%= link_to "delete", [comment.post, comment], method: :delete, data: {confirm: "are you sure?"}%>
 </div>

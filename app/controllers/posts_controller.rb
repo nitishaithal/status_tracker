@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 
 	def show
 		@post = Post.find(params[:id])
-		
+		redirect_to @post.project
 	end
 
 	def new
@@ -39,7 +39,7 @@ class PostsController < ApplicationController
 
 	def destroy
 		@post.destroy
-		redirect_to 'root_path'
+		redirect_to root_path
 	end
 
 	private

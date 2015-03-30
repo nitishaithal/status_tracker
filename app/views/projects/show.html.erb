@@ -1,21 +1,323 @@
-<br/><br/> 
-<h1> <%= @project.title %> </h1>
-<h4><%= @project.description %></h4>
+<div class="row">
+  <div class="col-md-9">
+      <div class="row" >
+  		<div class="col-md-4">
+              <a href="#delete_project" class="btn btn-danger pull-right mt25-sm ml5 visible-xs m3 btn-sm" aria-hidden="true" data-toggle="modal">Delete</a>
+              <a href="#edit_project_modal" class="btn btn-warning pull-right mt25-sm visible-xs m3 btn-sm" aria-hidden="true" data-toggle="modal">Edit</a>
+  		        <div class="bg_blur"></div>
+      </div>
+      <div class="col-md-8 pt10 col-xs-12">
+            <% @user = UserProject.user_id %>
+            <% if @user.admin == true %>
+              <a href="#delete_project" class="btn btn-danger pull-right mt25-sm ml5 hidden-xs" aria-hidden="true" data-toggle="modal">Delete</a>
+              <a href="#edit_project_modal" class="btn btn-warning pull-right mt25-sm hidden-xs" aria-hidden="true" data-toggle="modal">Edit</a>
+             <% end %>
+              <div class="m0 header">
+                  <div class="span-h2">
+                      <%= @project.title %>
+                  </div>
+                  <div class="span-h4"><%= @project.description %></div>
+                  </div>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-4">
+      		<div class="panel panel-default mt10">
+            <div class="panel-heading">
+                <%= text_field_tag :search, nil, autocomplete: "off" , class: "form-control", placeholder: "Search users...", id: "search_user" %>
+            </div>
+                <div class="panel-body p0 hide" id="search_user_list">
+                    <div class=" search_result mb0">
+                        <%= render :partial => 'projects/add_members' %>
+                  </div>
+              </div>
+          </div>
+          <div class="panel panel-default">
+                <div id = "members_panel" class="panel-heading" data-toggle="collapse"  data-target="#collapseOne"><b>Members</b>
+                <span id = "expand_user_list" class="glyphicon glyphicon-plus pull-right"></span>
+                </div>
+                      <div class="panel-body p0">
+                        <div id="collapseOne" class="panel-collapse collapse ">
+                             <ul class="user-list">
+                               <% @project.users.uniq.each do |user| %>
+                    			        <li class="user-list-item">
+                    			            <a href="#" class="pull-right dec-none">
+                                        <span class="glyphicon glyphicon-remove btn-xs btn-danger btn-outline"></span>
+                    			            </a>
+                      			       	<span class="pull-left">
+                      			        		<%= image_tag(gravatar_url_for(user, "26"), alt: user.email, class: "") %>
+                      			        </span>	
+                      			        <div class="ml5 pull-left mt5">
+                      				        	<div><%=  user.username %></div>
+                      			        </div>
+                      						<span class="clearfix"></span>
+                    					   </li>
+                              <% end %> 
+                    				</ul>
+                          </div>
+                      </div>
+                </div>
+            </div>
+           <div class="col-md-8  col-xs-12">
+             <div class="well pt0 pb10">
+               
+              <%= simple_form_for Post.new ,:html => {:class => 'form'} do |f| %>
+                    <div class="form-group hide">
+                      <%= f.label :title , class: "sr-only" %>
+                      <%= f.text_field :title, autofocus: true, class: "form-control", Title: "title" %>
+                    </div>
+  
+                      <div class="form-group mt15">
+                        <%= f.label :content , class: "sr-only" %>
+                        <%= f.text_area :content, autofocus: true , class: "form-control", placeholder: "Write post...", id: "summernote_post" , "data-provider" =>:summernote %>
+                      </div>
+                      <div class="pull-right ">
+                        <%= f.submit "Post", class: "btn btn-primary", "data-loading-text" => "Posting...", disabled: "disabled", id: "summernote_post_btn" %>
+                      </div>
+                    
+                      <%= f.hidden_field :project_id, :value => @project.id %>
+                    <div>
+                    </div>
+              <% end %>
+             </div>
+             
+             <% @project.posts.reverse_each do |post| %>
+              <div class="panel panel-default mt10">
+                <div class="panel-heading p5">
+                    <span class="span-h4"><%= image_tag(gravatar_url_for(post.user, "26"), alt: post.user.email, class: "img-thumbnail mr5") %><%= post.user.username %></span>
+                    <a href="#del_post_id<%= post.id %>" class="pull-right glyphicon glyphicon-remove dec-none color-silver" aria-hidden="true" data-toggle="modal"></a>
+                    <a href="#edit_post_id<%= post.id %>" class="pull-right glyphicon glyphicon-edit dec-none color-silver" aria-hidden="true" data-toggle="modal"></a>
+                </div>
+                    <div class="panel-body">
+                       <span><%= post.content %></span>
+                  </div>
+                  <div class="panel-footer p5">
+                    <%= simple_form_for([post, post.comments.build]) do |f| %>
+                    	<div class="input-group">
+                        
+                    	  <%= f.text_field :comment , class: "form-control zi0", placeholder: "Write comment...", id: "summernote_comment" , "data-provider" =>:summernote_comment %>
+                        <span class="input-group-btn">
+                    	    <%= f.submit "&#xe171;".html_safe , class: "btn btn-primary glyphicon glyphicon-send", id: "comment_submit", disabled: "disabled", id: "summernote_comment_btn" %>
+                        </span>
+                      </div>
+                    <% end %>
+                  </div> 
+                  
+                  <div id="del_post_id<%= post.id %>" class="modal fade">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            Are You Sure?
+                          </div>
+                          <div class="modal-footer pt5 pb5">
+                            <%= link_to "Yes", post_path(post), method: :delete, class: "pull-right btn btn-danger ml5"%>
+                            <button type="button" class="btn pull-right" data-dismiss="modal">No</button>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              
+              <%= simple_form_for post ,:html => {:class => 'form'} do |f| %>
+                <div class="modal fade" id="edit_post_id<%= post.id %>" data-backdrop="static"  role="dialog" aria-hidden="true" >
+                  <div class="modal-dialog">
+                  <div class="modal-content col-xs-offset-1 col-xs-10">
+                  <div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h2 class="modal-title">Edit Post</h2>
+                  </div>
+                <div class="modal-body">
+                    <div class="form-group hide">
+                      <%= f.label :title , class: "sr-only" %>
+                      <%= f.text_field :title, autofocus: true, class: "form-control", Title: "title" %>
+                    </div>
+  
+                      <div class="form-group mt15">
+                        <%= f.label :content , class: "sr-only" %>
+                        <%= f.text_area :content, autofocus: true , class: "form-control", placeholder: "Edit post...", id: "summernote_post" , "data-provider" =>:summernote %>
+                      </div>
+                      <%= f.hidden_field :project_id, :value => @project.id %>
+                      <div class="pull-right ">
+                      </div>
+                     <div class="modal-footer">
+                       <button type="reset" class="pull-left btn btn-default" >Reset</button>
+                        <%= f.submit "Update", class: "btn btn-primary", "data-loading-text" => "Updating..." %>
+                      </div>
+                      </div>
+                      </div>
+                    </div>
+               </div>                    
+                   
+              <% end %>
+                  
+                  <div id="delete_project" class="modal fade">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            Are You Sure?
+                          </div>
+                          <div class="modal-footer pt5 pb5">
+                            <%= link_to "Yes", project_path(@project), method: :delete,  class: "btn btn-danger pull-right mt25-sm ml5" %>
+                            <button type="button" class="btn pull-right" data-dismiss="modal">No</button>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                     
+                  
+              <% post.comments.each do |comment| %>
+                  <% unless comment.id.nil?  %>
+                      <div class="panel-footer p5">
+                          <%= image_tag(gravatar_url_for( comment.user, "26"), alt: comment.user.username, class: "img-thumbnail ", title: comment.user.username.upcase) %>
+                          <%= comment.comment %>
+                             <a href="#delete_comment" class="pull-right glyphicon glyphicon-remove color-silver dec-none" aria-hidden="true" data-toggle="modal"></a>
+                             <a href="#comment_id<%= comment.id %>" class="pull-right glyphicon glyphicon-edit color-silver dec-none" aria-hidden="true" data-toggle="modal"></a>
+                      </div>
+                  <% end %>
+                      <%= simple_form_for([post, comment]) do |f| %>
+                        	<div class="modal fade" id="comment_id<%= comment.id %>" data-backdrop="static"  role="dialog" aria-hidden="true" >
+                              <div class="modal-dialog">
+                                <div class="modal-content col-xs-offset-1 col-xs-10">
+                                  <div class="modal-header">
+                                  	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h2 class="modal-title">Edit Comment</h2>
+                                  </div>
+                        
+                                  <div class="modal-body">
+                                    <div class="form-group">
+                                      <%=f.label :comment, class: "sr-only" %>
+                                        <%=f.text_field :comment, autofocus: true, class: "form-control" %>
+                                    </div>
+                        
+                                    <div class="modal-footer">
+                                     <button type="reset" class="pull-left btn btn-default" >Reset</button>
+                                      <%= f.submit "Edit", class: "btn btn-primary" %>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        <% end %>
+                          <div id="delete_comment" class="modal fade">
+                              <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                  <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    Are You Sure?
+                                  </div>
+                                  <div class="modal-footer pt5 pb5">
+                                    <%= link_to "Yes", [comment.post, comment], method: :delete, class: "btn btn-danger pull-right mt25-sm ml5" %>
+                                    <button type="button" class="btn pull-right" data-dismiss="modal">No</button>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+              <% end %>
+              </div>
+              <% end %>
+          </div>
 
-<h5>Members</h5>
-<% @project.users.each do |user| %>
-<h6><%= user.username %></h6>
+      </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+    
+              
+<%= simple_form_for @project , :html=> {:class => 'form'} do |f| %>
+    <div class="modal fade" id="edit_project_modal" data-backdrop="static"  role="dialog" aria-hidden="true" >
+      <div class="modal-dialog">
+        <div class="modal-content col-xs-offset-1 col-xs-10">
+          <div class="modal-header">
+          	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2 class="modal-title">Edit Project</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="form-group">
+              <%=f.label :title, class: "sr-only" %>
+                <%=f.text_field :title, autofocus: true, class: "form-control", placeholder: "Title" %>
+            </div>
+            <div class="form-group">
+              <%=f.label :description,class: "sr-only" %>
+                <%=f.text_area :description,class: "form-control", placeholder: "Description" %>
+            </div>
+
+            <div class="modal-footer">
+             <button type="reset" class="pull-left btn btn-default" >Reset</button>
+              <%= f.submit "Update", class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 <% end %>
-<%= link_to "Edit", :action => "edit" %>
-<%= link_to "View all posts", :action => "index", :controller => "posts"%><br/>
-<div class ="printing">
-<%= simple_form_for Post.new do |f| %>
-	<%= f.input :title %>
-	<%= f.input :content %>
-	 <%= f.hidden_field :project_id, :value => @project.id %>
-	<%= f.submit %>
-	
-<% end %>
-<br/>
+
+
 </div>
-<%= render :partial => 'projects/add_members' %>
+
+<script>
+/*  $(document).ready(function(){
+    $(".modal").modal({
+      keyboard: false,
+      backdrop: 'static',
+      show: false
+    });
+  });*/
+</script>
+
+<script>
+/*  $(document).ready(function() {
+    $('#summernote_post').summernote();
+  });
+  
+$('[data-provider="summernote"]').each(function(){
+  $(this).summernote({ });
+});*/
+
+$("#search_user").on('input propertychange paste', function() {
+  if($("#search_user").val()!=""){
+    $("#search_user_list").removeClass("hide");
+  }else{
+    $("#search_user_list").addClass("hide");
+  }
+    $.get('/dashboard/search_users?search='+$("#search_user").val()+'&project_id='+<%= @project.id %>, function( data ) {
+      if(data==""){
+         $("#search_user_list").removeClass("p0");
+         data="<div class='center'>No users found</div>"
+      }else{
+         $("#search_user_list").addClass("p0");
+      }
+      $( ".search_result" ).html( data );
+    });
+});
+$("#members_panel").click(function(){
+    $("#expand_user_list").addClass("hide");
+});
+
+//Disable post button when textarea content length < 1
+$("#summernote_post").keyup(function() {
+  if($(this).val().length < 1) {
+    $("#summernote_post_btn").attr("disabled","disabled");
+  } else {
+    $("#summernote_post_btn").removeAttr("disabled");
+  }
+});
+
+//Disable comment button when the textfield content length < 1
+$("#summernote_comment").keyup(function() {
+  if($(this).val().length < 1) {
+    $("#summernote_comment_btn").attr("disabled","disabled");
+  } else {
+    $("#summernote_comment_btn").removeAttr("disabled");
+  }
+});
+
+/*$("#members_panel").toggle(
+  function() {
+    $("#expand_user_list").addClass( "in" );
+  }, function() {
+    $("#expand_user_list").removeClass( "in" );
+  }
+);*/
+</script>

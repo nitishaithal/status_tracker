@@ -1,5 +1,12 @@
 class User < ActiveRecord::Base
 
+def update_with_password(params={}) 
+  if params[:password].blank? 
+    params.delete(:password) 
+    params.delete(:password_confirmation) if params[:password_confirmation].blank? 
+  end 
+  update_attributes(params) 
+end
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_many :user_projects

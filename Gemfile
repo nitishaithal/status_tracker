@@ -12,10 +12,16 @@ gem 'bootstrap-will_paginate', '0.0.10'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise', '~> 3.4.1'
+gem 'summernote-rails'
+#gem 'codemirror-rails'
 gem 'bootstrap-sass',       '3.2.0.2'
 gem 'gravatarify', '~>3.0.0'
 gem 'simple_form', '~>3.0.2'
 gem 'ransack'
+gem 'font-awesome-rails' # required
+
+# To solve the problems on the turbolinks
+gem 'jquery-turbolinks'
 group :development, :testem do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

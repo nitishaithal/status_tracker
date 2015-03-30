@@ -1,43 +1,67 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+<div class="modal">
+  <div class="modal-dialog top--150 pt0 mt0">
+    <div class="modal-content col-xs-offset-1 col-xs-10">
+      <div class="modal-header">
+        <span class="pull-left hide"><%= link_to "", :back, class: "glyphicon glyphicon-arrow-left pt10 dec-none btn-xs btn-outline" %></span>
+        <h2 class="modal-title">Edit</h2>
+        <%= devise_error_messages! %>
+      </div>
+      <div class="modal-body">
 
-   <div class = "field">
-    <%= f.label :username %> <br/>
-    <%= f.text_field :username, autofocus: true %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-   <div class="field">
-    <%= f.label :title, "currently studying" %><br/>
-    <%= f.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description, "About me" %><br/>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-<div class ="field">
-  <br/>
- <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-<%= link_to "Back", :back %>
+          <div class="form-group">
+            <%= f.label :username , class: "sr-only" %>
+            <%= f.text_field :username, autofocus: true, class: "form-control", placeholder: "username" %>
+          </div>
+        
+          <div class="form-group">
+            <%= f.label :password , class: "sr-only" %>
+            <%= f.password_field :password, autocomplete: "off" , class: "form-control", placeholder: "Password..Optional" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password_confirmation , class: "sr-only" %>
+            <%= f.password_field :password_confirmation, autocomplete: "off" , class: "form-control", placeholder: "Confirm Password.." %>
+          </div>
+         
+          <div class="form-group">
+            <%= f.label :title , class: "sr-only" %>
+            <%= f.text_field :title, autofocus: true, class: "form-control", placeholder: "title" %>
+          </div>
+          
+          <div class="form-group">
+            <%= f.label :description , class: "sr-only" %>
+            <%= f.text_field :description, autofocus: true, class: "form-control", placeholder: "About Me" %>
+          </div>
+          
+          <div class ="form group">
+            Gender:
+            <%= f.radio_button(:gender, 'Male') %> Male
+            <%= f.radio_button(:gender, 'Female')%> Female
+          </div>
+            
+            <div class= "mt20 form-group">
+              Birthday:
+              <%= f.label :birthday, class: "sr-only" %>
+              <%= f.date_select :birthday, :start_year=>1900 %>
+            </div>
+      </div>
+      <div class="modal-footer">
+        
+        <%= link_to "Cancel account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete , class: "btn btn-success pull-left" %>
+        <%= f.submit "Update", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>  
 </div>
+<% end %>
+<script>
+  $(document).ready(function(){
+    $(".modal").modal({
+      keyboard: false,
+      backdrop: 'static',
+      show: true
+    });
+    $("body").addClass('bg-img')
+    $("body").addClass('img-responsive')
+  });
+</script>

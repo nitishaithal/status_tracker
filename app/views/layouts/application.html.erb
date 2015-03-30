@@ -1,56 +1,108 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>
-    StatusApp
-  </title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <link href='http://fonts.googleapis.com/css?family=Arvo:400,400italic' rel='stylesheet' type='text/css'>
-  <%= csrf_meta_tags %>
-</head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>Tracker</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <link href='https://fonts.googleapis.com/css?family=Arvo:400,400italic' rel='stylesheet' type='text/css'>
+    <%= csrf_meta_tags %>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<header class="navbar navbar-fixed-top navbar-inverse">
-
-
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-            <li><%= link_to "Home", root_path %></li>
-            <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Project <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li>  <%= link_to "View Projects", :action => "add project", :action => "index", :controller => "projects" %></li>
-              <li class="divider"></li>
-              <li><%= link_to "Create project", :action => "new", :id => current_user.id, :controller => "projects" %></li>
-              <li><%= link_to "Add members", :action => "add project", :action => "index", :controller => "projects"%></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Users <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li> <%= link_to "List of Users",:action => "index"%></li>
-              <li class="divider"></li>
-               <li><%= link_to "Edit Profile", :action => "edit", :controller => "home" %></li>
+    <meta name="viewport" content="width=device-width , user-scalable=no">
+  </head>
+  <body>
+  <% if user_signed_in? %>
+  
+     <div id="wrapper">
+        <div class="overlay"></div>
+    
+        <!-- Sidebar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+            <ul class="nav sidebar-nav">
+                <li>
+                     <%= link_to "Home", root_path %>
+                </li>
+                
+                <li class="dropdown hide">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Project <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header">  <%= link_to "View Projects", :action => "add project", :action => "index", :controller => "projects" %></li>
+                        <li><%= link_to "Create project", :action => "new", :id => current_user.id, :controller => "projects" %></li>
+                        <li><%= link_to "Add members", :action => "add project", :action => "index", :controller => "projects"%></li>
+                     </ul>          
+                </li>
+                <li class="dropdown hide">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <span class="caret"></span></a>
+                     <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header"> <%= link_to "List of Users",:action => "index"%></li>
+                            <li><%= link_to "Edit Profile", :action => "edit", :controller => "home" %></li>
+                            <li><%= link_to "sign out", destroy_user_session_path, :method => :delete %></li>
+                     </ul>
+                </li>
                 <li><%= link_to "sign out", destroy_user_session_path, :method => :delete %></li>
             </ul>
-          </li>
-			   
-      
-		<% else %>
-			<li><%= link_to "Log in", new_user_session_path %></li>
-			<li><%= link_to "sign up", new_user_registration_path %></li>
-		<% end %>
-      </ul>
-    </nav>
+        </nav>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="pt10">
+              <div>
+                    <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                        <span class="hamb-top"></span>
+    			        <span class="hamb-middle"></span>
+				        <span class="hamb-bottom"></span>
+                    </button>
+                    <h2>Tracker</h2>
+            </div>
+            <div class="container-fluid">
+             <%= yield %>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<script>
+$(document).ready(function () {
+  var trigger = $('.hamburger'),
+      overlay = $('.overlay'),
+     isClosed = false;
+
+    trigger.click(function () {
+      hamburger_cross();      
+    });
+
+    function hamburger_cross() {
+
+      if (isClosed == true) {          
+        overlay.hide();
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+      } else {   
+        overlay.show();
+        trigger.removeClass('is-closed');
+        trigger.addClass('is-open');
+        isClosed = true;
+      }
+  }
   
-</header>
-<body>
-		<%= yield %>
-</body>
+  $('[data-toggle="offcanvas"]').click(function () {
+        $('#wrapper').toggleClass('toggled');
+  });  
+});
+
+$(function() { 
+      $(".btn-primary, .btn-danger").click(function(){
+         $(this).button('loading');
+         }); 
+      });
+</script>
+      
+  		<% else %>
+  	            <% flash.each do |name, msg| %>
+  	                 <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+  	             <% end %>
+  		          <%= yield %>
+  		<% end %>
+  		
+ </body>
 </html>

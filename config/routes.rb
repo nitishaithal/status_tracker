@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   devise_for :users
   root to: "home#index"
-  resources :dashboard
+  resources :dashboard do
+    collection do
+      get 'search_users'
+    end
+  end
   resources :posts do 
   	resources :comments
   end

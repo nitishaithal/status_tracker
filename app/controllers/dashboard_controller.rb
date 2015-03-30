@@ -8,9 +8,17 @@ class DashboardController < ApplicationController
 	def new
 		@user = current_user
 		@projects = @user.projects
+		if @user.title == nil
+			user_signed_in = true
+			redirect_to :controller => 'devise/registrations', :action =>'edit'
+		end
 	end
-<<<<<<< HEAD
-	
-=======
->>>>>>> fb7f290fdfa7c51f296559f62bc7840816fbfc37
+	def show
+		@user = User.find(params[:id])
+	end
+	def search_users
+		@users = User.search(params[:search]).paginate(:page => params[:page], :per_page => 5)
+		@project = Project.find(params[:project_id])
+		render :layout => false
+	end
 end
