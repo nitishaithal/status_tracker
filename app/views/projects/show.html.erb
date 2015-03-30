@@ -7,7 +7,10 @@
   		        <div class="bg_blur"></div>
       </div>
       <div class="col-md-8 pt10 col-xs-12">
-            <% @user = UserProject.user_id %>
+            <% @proj = UserProject.find_by_project_id(@project.id) %>
+            <%= @project.id %>
+            <%= @proj %>
+            <% @user = UserProject.find_by_user_id(current_user) %>
             <% if @user.admin == true %>
               <a href="#delete_project" class="btn btn-danger pull-right mt25-sm ml5 hidden-xs" aria-hidden="true" data-toggle="modal">Delete</a>
               <a href="#edit_project_modal" class="btn btn-warning pull-right mt25-sm hidden-xs" aria-hidden="true" data-toggle="modal">Edit</a>
