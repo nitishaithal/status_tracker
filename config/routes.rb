@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
   resources :goals
   resources :milestones
+  resources :intents
   match '/edit' => 'home#edit', :as => :edit, :via => [:get, :post]
   match ':controller(/:action(/:id))', :via => [:get, :post]
   #get 'projects/show'
