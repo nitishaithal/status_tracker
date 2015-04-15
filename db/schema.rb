@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415051414) do
+ActiveRecord::Schema.define(version: 20150415094204) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "comment"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 20150415051414) do
 
   add_index "goals", ["project_id"], name: "index_goals_on_project_id"
   add_index "goals", ["user_id"], name: "index_goals_on_user_id"
+
+  create_table "intents", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "milestone_id"
+    t.string   "status_intent"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "intents", ["milestone_id"], name: "index_intents_on_milestone_id"
 
   create_table "milestones", force: :cascade do |t|
     t.integer  "goal_id"
