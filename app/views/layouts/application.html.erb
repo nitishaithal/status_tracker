@@ -91,16 +91,14 @@ $(document).ready(function () {
 });
 
 $(function() { 
-      $(".btn-primary, .btn-danger").click(function(){
+      $(".btn-primary, .load").click(function(){
          $(this).button('loading');
          }); 
       });
 </script>
       
   		<% else %>
-  	            <% flash.each do |name, msg| %>
-  	                 <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
-  	             <% end %>
+
   		          <%= yield %>
   		<% end %>
   		

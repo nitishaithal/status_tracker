@@ -27,7 +27,13 @@ class ProjectsController < ApplicationController
 	end
 
 	def edit
-		@project = Project.find(params[:id])
+		
+		#Can edit the project only if the user is an admin
+		if UserProject.where("user_id = ? and project_id = ? and admin = ? ", current_user.id, params[:id], true).exists?
+			@project = Project.find(params[:id])
+		else
+			redirect_to root_path
+		end
 	end
 	
 	def update
@@ -50,10 +56,14 @@ class ProjectsController < ApplicationController
 		
 	end
 
-	def destroy
+	def destroy 
 		@project = Project.find(params[:id])
-		@project.destroy
-		redirect_to root_path
+
+		#can destroy the project only if the user is an admin
+		if UserProject.where("user_id = ? and project_id = ? and admin = ? ", current_user.id, params[:id], true).exists?
+			@project.destroy
+		end
+			redirect_to root_path
 	end
 	
 	private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327044003) do
+ActiveRecord::Schema.define(version: 20150415051414) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "comment"
@@ -23,6 +23,30 @@ ActiveRecord::Schema.define(version: 20150327044003) do
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "goals", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.text     "description"
+    t.string   "status_goal"
+    t.date     "est_time_goal"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "goals", ["project_id"], name: "index_goals_on_project_id"
+  add_index "goals", ["user_id"], name: "index_goals_on_user_id"
+
+  create_table "milestones", force: :cascade do |t|
+    t.integer  "goal_id"
+    t.text     "description"
+    t.string   "status_milestone"
+    t.date     "est_time_milestone"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "milestones", ["goal_id"], name: "index_milestones_on_goal_id"
 
   create_table "posts", force: :cascade do |t|
     t.string   "title"
