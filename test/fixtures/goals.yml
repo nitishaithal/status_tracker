@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  project_id: 
+  description: MyText
+  status_goal: MyString
+  est_time_goal: 2015-04-15
+
+two:
+  user_id: 
+  project_id: 
+  description: MyText
+  status_goal: MyString
+  est_time_goal: 2015-04-15

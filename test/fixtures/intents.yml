@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  milestone_id: 
+  status_intent: MyString
+
+two:
+  description: MyText
+  milestone_id: 
+  status_intent: MyString

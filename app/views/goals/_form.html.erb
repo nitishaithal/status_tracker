@@ -1,0 +1,9 @@
+<%= simple_form_for @goal do |f| %>
+	<%= f.input :description %><br/>
+	Status of the Goal: <%= f.select :status_goal, options_for_select(%w[not_started In_progress Started Completed Problem_occurred])%><br/><br/>
+    Estimated time: <%= f.date_select :est_time_goal, :start_year=>2015 %><br/><br/>
+    <%= f.hidden_field :user_id, :value => usr_id%>
+    <%= f.hidden_field :project_id, :value => @project.id %>
+	<%= f.submit %>
+<% end %>
+

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  goal_id: 
+  description: MyText
+  status_milestone: MyString
+  est_time_milestone: 2015-04-15
+
+two:
+  goal_id: 
+  description: MyText
+  status_milestone: MyString
+  est_time_milestone: 2015-04-15
