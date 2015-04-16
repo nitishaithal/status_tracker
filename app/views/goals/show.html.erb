@@ -2,35 +2,41 @@
 <h3>Goal: <%= @goal.description %></h3><br/>
 <h3>Status: <%= @goal.status_goal %></h3>
 <h4>Estimate time: <%= @goal.est_time_goal %></h4>
-</div><br/><br/><br/><br/><br/><br/><br/>
+</div>
 
+ <div class="col-md-8  col-xs-12">
+             <div class="well pt0 pb10">
+               
+              <%= simple_form_for Milestone.new ,:html => {:class => 'form'} do |f| %>
+                      <div class="form-group mt15">
+                        <%= f.label :description , class: "sr-only" %>
+                        <%= f.text_area :description, autofocus: true , class: "form-control", placeholder: "Write milestone...", id: "summernote_post" , "data-provider" =>:summernote %>
+                        status milestone:
+                        <%= f.select :status_milestone, options_for_select(%w[not_started In_progress Started Completed Problem_occurred]), id: "summernote_post" , "data-provider" =>:summernote %><br/><br/>
+                        <div>
+                            Estimated time: <%= f.date_select :est_time_milestone, :start_year=>2015 %>
+                            <%= f.hidden_field :goal_id, :value => @goal.id%>
+                        </div>
+                      </div>
+                      <div class="pull-right ">
+                       <%= f.submit "Submit milestone", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
+                      </div>
+                    <div>
+                    </div>
+              <% end %>
+             </div>
 
 <div class ="pull-left">
    <u>  Milestones</u>
-	<% @milestones.uniq.each do |milestone| %>
-	  <%if @goal.id == milestone.goal_id %>
-    		<br/>Description: <%=link_to milestone.description, :controller => 'milestones', :action => 'show', :id => milestone.id%><br/>
-    		Estimated time: <%= milestone.est_time_milestone %><br/>
-    		<% if milestone.status_milestone != "Completed" %>
-    			Status: <%= milestone.status_milestone %><br/>
-       		<% end %>
-   		<% end %>
-	<% end %>
+  <% @milestones.uniq.each do |milestone| %>
+    <%if @goal.id == milestone.goal_id %>
+        <br/>Description: <%=link_to milestone.description, :controller => 'milestones', :action => 'show', :id => milestone.id%><br/>
+        Estimated time: <%= milestone.est_time_milestone %><br/>
+        <% if milestone.status_milestone != "Completed" %>
+          Status: <%= milestone.status_milestone %><br/>
+          <% end %>
+      <% end %>
+  <% end %>
 </div>
-<br/><br/><br/><br/><br/><br/><br/>
-
-
-<div class ="pull-right">
-<h1>	Milestones</h1><h3>
-<%= simple_form_for Milestone.new do |f| %>
-	<%= f.input :description %><br/>
-	Status of the Milestone: <%= f.select :status_milestone, options_for_select(%w[not_started In_progress Started Completed Problem_occurred])%><br/><br/>
-    Estimated time: <%= f.date_select :est_time_milestone, :start_year=>2015 %><br/><br/>
-    <%= f.hidden_field :goal_id, :value => @goal.id%>
-	<%= f.submit "Submit milestone", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
-<% end %>
-</h3>
-</div>
-
 
 

@@ -17,6 +17,10 @@
            </div>
         <ul class="list-group">
         <div class= "table-space">      
+          <ul class="list-group">
+        <li class="list-group-item group-design">
+          <span class="span-h2">Goals</span>
+        </li>
         <% @goals.uniq.each do |goal| %>
           <%if goal.user_id==@usr.id and goal.project_id== @project.id%>
              <a class="list-group-item" href="<%= goal_path(goal) %>" ><span class="span-h4"><%= goal.description %></span></a>
