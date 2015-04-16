@@ -1,33 +1,30 @@
 
 <div class ="table-space">
  <div class="col-md-8  col-xs-12">
-             <div class="well pt0 pb10">
-               
-              <%= simple_form_for Intent.new ,:html => {:class => 'form'} do |f| %>
-                      <div class="form-group mt15">
-                        <%= f.label :description , class: "sr-only" %>
-                        <%= f.text_area :description, autofocus: true , class: "form-control", placeholder: "Write milestone...", id: "summernote_post" , "data-provider" =>:summernote %><br/>
-                        <div>
-                          status milestone:
-                          <%= f.select :status_intent, options_for_select(%w[not_started In_progress Started Completed Problem_occurred]), id: "summernote_post" , "data-provider" =>:summernote %><br/><br/>
-                        </div>
-                      </div>
-                      <div class="pull-right ">
-                       <%= f.submit "Submit intent", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
-                      </div>
-                    <div>
-                    </div>
-              <% end %>
-             </div>
-</div>
-      <div class ="pull-left">
-      <% @intents.uniq.each do |intent| %>
+    <div class="well pt0 pb10">
+        <%= simple_form_for Intent.new ,:html => {:class => 'form'} do |f| %>
+            <div class="form-group mt15">
+                <%= f.label :description , class: "sr-only" %>
+                <%= f.text_area :description, autofocus: true , class: "form-control", placeholder: "Write intent...", id: "summernote_post" , "data-provider" =>:summernote %><br/>
+                <div>
+                    status intent:
+                    <%= f.select :status_intent, options_for_select(%w[not_started In_progress Started Completed Problem_occurred]), id: "summernote_post" , "data-provider" =>:summernote %><br/><br/>
+                </div>
+            </div>
+            <div class="pull-right ">
+                <%= f.submit "Submit intent", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
+            </div>
+        <% end %>
+      </div>
+  </div>
+  <div class ="pull-left">
+    <% @intents.uniq.each do |intent| %>
        <%if @milestone.id == intent.milestone_id %>
-      <br/>Description: <%= intent.description %><br/>
-        <% if intent.status_intent != "Completed" %>
-          Status: <%= intent.status_intent %><br/>
-          <% end %>
-      <% end %>
-  <% end %>
-</div>
+           <br/>Description: <%= intent.description %><br/>
+           <% if intent.status_intent != "Completed" %>
+               Status: <%= intent.status_intent %><br/>
+           <% end %>
+       <% end %>
+    <% end %>
+  </div>
 </div>
