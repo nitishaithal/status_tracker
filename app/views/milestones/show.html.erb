@@ -11,6 +11,9 @@
                     <%= f.select :status_intent, options_for_select(%w[not_started In_progress Started Completed Problem_occurred]), id: "summernote_post" , "data-provider" =>:summernote %><br/><br/>
                 </div>
             </div>
+            <div class="hidden">
+                 <%= f.hidden_field :milestone_id, :value => @milestone.id %>
+            </div>
             <div class="pull-right ">
                 <%= f.submit "Submit intent", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
             </div>
