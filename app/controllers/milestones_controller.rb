@@ -10,10 +10,15 @@ def create
 	end
 end
 
+def new
+	@milestone = Milestone.new
+end
+
 def show
 	@milestones = Milestone.all
 	@intents = Intent.all
 	@milestone = Milestone.find(params[:id])
+	redirect_to @milestone.goal
 end
 def update
 	@milestone = Milestone.find(params[:id])

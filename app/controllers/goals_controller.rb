@@ -18,13 +18,11 @@ class GoalsController < ApplicationController
 	end
 	
 	def create
-		@goal = Goal.new(goal_params)
-		#if the goal is able to save then redirect to the goals page
-		if @goal.save
-			redirect_to @goal
-		else 
-			render 'new'
-		end
+		@goal = Goal.create(goal_params)
+		respond_to do |format|
+		    format.html { redirect_to @goal }
+		    format.json { render :json => @goal.to_json }
+  		end
 	end
 
 	def edit
