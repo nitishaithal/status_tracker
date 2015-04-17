@@ -27,6 +27,7 @@
        <%if @milestone.id == intent.milestone_id %>
                 <div class="panel-heading p5">
                 <a href="#del_intent_id<%= intent.id %>" class="pull-right glyphicon glyphicon-remove dec-none color-silver" aria-hidden="true" data-toggle="modal"></a>
+                <a href="#edit_intent_id<%= intent.id %>" class="pull-right glyphicon glyphicon-edit dec-none color-silver" aria-hidden="true" data-toggle="modal"></a>
                 <br/>Description: <%= intent.description %><br/>
                   Status: <%= intent.status_intent %><br/>
                 </div>
@@ -45,6 +46,36 @@
                       </div>
                   </div>
        <% end %>
+
+ <%= simple_form_for intent ,:html => {:class => 'form'} do |f| %>
+                <div class="modal fade" id="edit_intent_id<%= intent.id %>" data-backdrop="static"  role="dialog" aria-hidden="true" >
+                  <div class="modal-dialog">
+                  <div class="modal-content col-xs-offset-1 col-xs-10">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h2 class="modal-title">Edit Intent</h2>
+                  </div>
+                <div class="modal-body">
+                     <%= f.label :description , class: "sr-only" %>
+                <%= f.text_area :description, autofocus: true , class: "form-control", placeholder: "Write intent...", id: "summernote_post" , "data-provider" =>:summernote %><br/>
+                    status intent:
+          <%= f.select :status_intent, options_for_select(%w[not_started In_progress Started Completed Problem_occurred]), id: "summernote_post" , "data-provider" =>:summernote %><br/><br/>
+         <div class="hidden">
+                 <%= f.hidden_field :milestone_id, :value => @milestone.id %>
+            </div>
+  
+                      
+                      <div class="pull-right ">
+                      </div>
+                     <div class="modal-footer">
+                       <button type="reset" class="pull-left btn btn-default" >Reset</button>
+                        <%= f.submit "Update", class: "btn btn-primary", "data-loading-text" => "Updating..." %>
+                      </div>
+                      </div>
+                      </div>
+                    </div>
+               </div> 
+ <% end %>
     <% end %>
   </div>
 </div>

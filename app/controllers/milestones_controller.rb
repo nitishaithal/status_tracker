@@ -14,7 +14,9 @@ end
 def new
 	@milestone = Milestone.new
 end
-
+def edit
+	redirect_to @milestone.goal
+end
 def show
 	@milestones = Milestone.all
 	@intents = Intent.all

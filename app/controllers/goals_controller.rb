@@ -26,7 +26,7 @@ class GoalsController < ApplicationController
 	end
 
 	def edit
-		
+		redirect_to @goal
 	end
 
 	def update
@@ -40,7 +40,7 @@ class GoalsController < ApplicationController
 
 	def destroy
 		@goal.destroy
-		redirect_to root_path
+		redirect_to @goal
 	end
 
 	private
