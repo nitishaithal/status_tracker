@@ -4,7 +4,6 @@
     <div class="well pt0 pb10">
       <% a=0.00 %>
       <% n=0.00 %>
-    
         <%= simple_form_for Intent.new ,:html => {:class => 'form'} do |f| %>
             <div class="form-group mt15">
                 <%= f.label :description , class: "sr-only" %>
@@ -58,12 +57,7 @@
                       </div>
                   </div>
        <% end %>
-  <div class="percentage">
-    <% if n!=0 %>
-         <% c=(n/a)*100 %>
-         <%= c.to_i %> Percentage compeleted
-    <% end %>
-  </div>
+ 
   
  <%= simple_form_for intent ,:html => {:class => 'form'} do |f| %>
                 <div class="modal fade" id="edit_intent_id<%= intent.id %>" data-backdrop="static"  role="dialog" aria-hidden="true" >
@@ -74,12 +68,14 @@
                       <h2 class="modal-title">Edit Intent</h2>
                   </div>
                 <div class="modal-body">
-                     <%= f.label :description , class: "sr-only" %>
-                <%= f.text_area :description, autofocus: true , class: "form-control", placeholder: "Write intent...", id: "summernote_post" , "data-provider" =>:summernote %><br/>
-                    status intent:
-          <%= f.select :status_intent, options_for_select(%w[not_started In_progress Started Completed Problem_occurred]), id: "summernote_post" , "data-provider" =>:summernote %><br/><br/>
-         <div class="hidden">
-                 <%= f.hidden_field :milestone_id, :value => @milestone.id %>
+                    <% if intent.status_intent != "Completed" %>
+                        <%= f.label :description , class: "sr-only" %>
+                        <%= f.text_area :description, autofocus: true , class: "form-control", placeholder: "Write intent...", id: "summernote_post" , "data-provider" =>:summernote %><br/>
+                        status intent:
+                       <%= f.select :status_intent, options_for_select(%w[not_started In_progress Started Completed Problem_occurred]), id: "summernote_post" , "data-provider" =>:summernote %><br/><br/>
+                      <div class="hidden">
+                    
+                    <%= f.hidden_field :milestone_id, :value => @milestone.id %>
             </div>
   
                       
@@ -89,6 +85,9 @@
                        <button type="reset" class="pull-left btn btn-default" >Reset</button>
                         <%= f.submit "Update", class: "btn btn-primary", "data-loading-text" => "Updating..." %>
                       </div>
+                     <% else %>
+                      Status completed cannot edit
+                    <% end %>
                       </div>
                       </div>
                     </div>
@@ -98,7 +97,12 @@
   </div>
 </div>
 </div>
-
-
-
 </div>
+ <div class="percentage">
+    <% if n!=0 %>
+         <% c=(n/a)*100 %>
+         <%= c.to_i %> Percentage compeleted
+    <% else %>
+        0% None of the intents are completed
+    <% end %>
+  </div>

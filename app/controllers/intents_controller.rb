@@ -1,5 +1,5 @@
 class IntentsController < ApplicationController
-before_action :find_intent, only: [:destroy]
+before_action :find_intent, only: [:destroy, :update, :destroy, :edit]
 
 def create
 	@intent = Intent.new(intent_params)
@@ -20,7 +20,7 @@ def show
 end
 def update
 		if @intent.update(intent_params)
-			redirect_to @goal
+			redirect_to @intent.milestone
 		else
 			render 'edit'
 		end
