@@ -2,7 +2,9 @@
 <div class ="table-space">
  <div class="col-md-8  col-xs-12">
     <div class="well pt0 pb10">
-      <% a=1 %>
+      <% a=0.00 %>
+      <% n=0.00 %>
+    
         <%= simple_form_for Intent.new ,:html => {:class => 'form'} do |f| %>
             <div class="form-group mt15">
                 <%= f.label :description , class: "sr-only" %>
@@ -17,7 +19,7 @@
             </div>
             <div class="pull-right ">
                 <%= f.submit "Submit intent", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
-                <% a = a+1 %>
+                
             </div>
         <% end %>
       </div>
@@ -27,6 +29,7 @@
    <div class="well pt0 pb10">
     <% @intents.uniq.each do |intent| %>
        <%if @milestone.id == intent.milestone_id %>
+              <% a = a+1 %>
                 <div class="panel-heading p5">
                 <a href="#del_intent_id<%= intent.id %>" class="pull-right glyphicon glyphicon-remove dec-none color-silver" aria-hidden="true" data-toggle="modal"></a>
                 <a href="#edit_intent_id<%= intent.id %>" class="pull-right glyphicon glyphicon-edit dec-none color-silver" aria-hidden="true" data-toggle="modal"></a>
@@ -36,11 +39,8 @@
                
                 <div class="calculation">
                   <% if intent.status_intent == "Completed"%>
-                     <%= n = n + 1 rescue n = 1 %>
+                     <% n = n + 1 %>
                   <% end %>
-                  <div class="percentage">
-                   
-                  </div>
                 </div>
 
                 <div id="del_intent_id<%= intent.id %>" class="modal fade">
@@ -58,7 +58,13 @@
                       </div>
                   </div>
        <% end %>
-
+  <div class="percentage">
+    <% if n!=0 %>
+         <% c=(n/a)*100 %>
+         <%= c.to_i %> Percentage compeleted
+    <% end %>
+  </div>
+  
  <%= simple_form_for intent ,:html => {:class => 'form'} do |f| %>
                 <div class="modal fade" id="edit_intent_id<%= intent.id %>" data-backdrop="static"  role="dialog" aria-hidden="true" >
                   <div class="modal-dialog">
