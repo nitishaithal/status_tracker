@@ -2,6 +2,7 @@
 <div class ="table-space">
  <div class="col-md-8  col-xs-12">
     <div class="well pt0 pb10">
+      <% a=1 %>
         <%= simple_form_for Intent.new ,:html => {:class => 'form'} do |f| %>
             <div class="form-group mt15">
                 <%= f.label :description , class: "sr-only" %>
@@ -16,13 +17,14 @@
             </div>
             <div class="pull-right ">
                 <%= f.submit "Submit intent", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
+                <% a = a+1 %>
             </div>
         <% end %>
       </div>
   </div>
     <div class ="table-allign">
     <div class="col-md-8  col-xs-12">
-   <div class="well pt0 pb10">   
+   <div class="well pt0 pb10">
     <% @intents.uniq.each do |intent| %>
        <%if @milestone.id == intent.milestone_id %>
                 <div class="panel-heading p5">
@@ -31,6 +33,16 @@
                 <br/>Description: <%= intent.description %><br/>
                   Status: <%= intent.status_intent %><br/>
                 </div>
+               
+                <div class="calculation">
+                  <% if intent.status_intent == "Completed"%>
+                     <%= n = n + 1 rescue n = 1 %>
+                  <% end %>
+                  <div class="percentage">
+                   
+                  </div>
+                </div>
+
                 <div id="del_intent_id<%= intent.id %>" class="modal fade">
                       <div class="modal-dialog modal-sm">
                         <div class="modal-content">
