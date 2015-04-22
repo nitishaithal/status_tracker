@@ -66,6 +66,10 @@ class ProjectsController < ApplicationController
 			redirect_to root_path
 	end
 	
+	def chat
+		render 'chat'
+	end
+
 	private
 
 	def project_params
