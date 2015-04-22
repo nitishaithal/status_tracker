@@ -1,9 +1,43 @@
-<%= simple_form_for @goal do |f| %>
-	<%= f.input :description %><br/>
-	Status of the Goal: <%= f.select :status_goal, options_for_select(%w[not_started In_progress Started Completed Problem_occurred])%><br/><br/>
-    Estimated time: <%= f.date_select :est_time_goal, :start_year=>2015 %><br/><br/>
-    <%= f.hidden_field :user_id, :value => usr_id%>
-    <%= f.hidden_field :project_id, :value => @project.id %>
-	<%= f.submit %>
-<% end %>
 
+<%= simple_form_for Goal.new , :html=> {:class => 'form'} do |f| %>
+    <div class="modal " id="create_goal_modal" data-backdrop="static" >
+      <div class="modal-dialog">
+        <div class="modal-content col-xs-offset-1 col-xs-10">
+          <div class="modal-header">
+          	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2 class="modal-title">Create Goal</h2>
+          </div>
+
+          <div class="modal-body">
+            <div class="form-group">
+              <%=f.label :description, class: "sr-only" %>
+                <%=f.text_field :description, autofocus: true, class: "form-control", placeholder: "Description",  id: "goal_create" , "data-provider" =>:proj  %>
+            </div>
+            <div class="form-group">
+              Status of the Goal: <%= f.select :status_goal, options_for_select(%w[not_started In_progress Started Completed Problem_occurred])%><br/><br/>
+   			  Estimated time: <%= f.date_select :est_time_goal, :start_year=>2015 %><br/><br/>
+            </div>
+            <div class="hidden-field">
+            	<%= f.hidden_field :user_id, :value =>current_user.id%>
+    			<%= f.hidden_field :project_id, :value => @project.id %>
+            </div>
+            <div class="modal-footer">
+             <button type="reset" class="pull-left btn btn-default" >Reset</button>
+              <%= f.submit "Create", class: "btn btn-primary", disabled: "disabled", id: "goal_create_btn" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
+<script>
+  //disabling the create button of the project if the length of the project is < 1
+
+  $("#goal_create").keyup(function() {
+  if($(this).val().length < 1) {
+    $("#goal_create_btn").attr("disabled","disabled");
+  } else {
+    $("#goal_create_btn").removeAttr("disabled");
+  }
+});
+</script>

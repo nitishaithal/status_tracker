@@ -20,6 +20,9 @@
           <ul class="list-group">
         <li class="list-group-item group-design">
           <span class="span-h2">Goals</span>
+          <% if @usr.username == current_user.username %>
+              <a href="#create_goal_modal"  data-toggle="modal" class="pull-right btn btn-success glyphicon glyphicon-plus btn-sm btn-outline" ></a>
+            <% end %>
         </li>
         <% @goals.uniq.each do |goal| %>
           <%if goal.user_id==@usr.id and goal.project_id== @project.id%>
@@ -28,7 +31,7 @@
         <% end %>     
       </div>
       </ul>
-             <% if @usr.username == current_user.username %>
-             <h1><%= link_to "add goals", controller: 'goals', action: 'new', :user_id => @usr.id, :project_id => @project.id%></h1>
-            <% end %>
+             
 </div>
+
+<%= render 'goals/form',:user_id => current_user.id %>

@@ -17,7 +17,7 @@
                  <%= f.hidden_field :milestone_id, :value => @milestone.id %>
             </div>
             <div class="pull-right ">
-                <%= f.submit "Submit intent", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
+                <%= f.submit "Submit intent", class: "btn btn-primary", "data-loading-text" => "Submitting...", disabled: "disabled", id: "summernote_post_btn" %>
                 
             </div>
         <% end %>
@@ -33,7 +33,17 @@
                 <a href="#del_intent_id<%= intent.id %>" class="pull-right glyphicon glyphicon-remove dec-none color-silver" aria-hidden="true" data-toggle="modal"></a>
                 <a href="#edit_intent_id<%= intent.id %>" class="pull-right glyphicon glyphicon-edit dec-none color-silver" aria-hidden="true" data-toggle="modal"></a>
                 <br/>Description: <%= intent.description %><br/>
-                  Status: <%= intent.status_intent %><br/>
+                  <% if intent.status_intent == "Completed"%>
+                  <div class="status-panel">
+                    Status: <%= intent.status_intent %><br/>
+                  </div>
+                  <% elsif intent.status_intent == "Problem_occurred" %>
+                    <div class="status-error">
+                      Status: <%= intent.status_intent %><br/>
+                    </div>
+                    <% else %>
+                      Status: <%= intent.status_intent %><br/>
+                  <% end %>
                 </div>
                
                 <div class="calculation">
@@ -106,3 +116,22 @@
         0% None of the intents are completed
     <% end %>
   </div>
+
+<script>
+ $(document).ready(function(){
+    $(".modal").modal({
+      keyboard: false,
+      backdrop: 'static',
+      show: false
+    });
+  });
+</script>
+<script>
+  $("#summernote_post").keyup(function() {
+    if($(this).val().length < 1) {
+      $("#summernote_post_btn").attr("disabled","disabled");
+    } else {
+    $("#summernote_post_btn").removeAttr("disabled");
+    }
+  });
+</script>

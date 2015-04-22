@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="pull-right ">
-          <%= f.submit "Submit milestone", class: "btn btn-primary", "data-loading-text" => "Submitting...", id: "summernote_post_btn" %>
+          <%= f.submit "Submit milestone", class: "btn btn-primary", "data-loading-text" => "Submitting...", disabled: "disabled", id: "summernote_post_btn" %>
         </div>
       <% end %>
     </div>
@@ -90,3 +90,21 @@
   <% end %>
 </div>
 </div>
+<script>
+ $(document).ready(function(){
+    $(".modal").modal({
+      keyboard: false,
+      backdrop: 'static',
+      show: false
+    });
+  });
+</script>
+<script>
+$("#summernote_post").keyup(function() {
+  if($(this).val().length < 1) {
+    $("#summernote_post_btn").attr("disabled","disabled");
+  } else {
+    $("#summernote_post_btn").removeAttr("disabled");
+  }
+});
+</script>
