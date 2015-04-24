@@ -19,6 +19,7 @@ gem 'gravatarify', '~>3.0.0'
 gem 'simple_form', '~>3.0.2'
 gem 'ransack'
 gem 'font-awesome-rails' # required
+gem 'redis', '2.1.1'
 
 # To solve the problems on the turbolinks
 gem 'jquery-turbolinks'
