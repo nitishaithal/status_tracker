@@ -68,9 +68,7 @@ class ProjectsController < ApplicationController
 	end
 	
 	def chat_interface
-		respond_to do |format|
-  		 format.js
- 		end
+		render :partial => 'chat'
 	end
 
 	private

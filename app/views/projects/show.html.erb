@@ -97,7 +97,7 @@
 
                                     <div id ="div_id">
                                       <%= form_tag({:action => 'chat_interface'}, :id => 'user',:project_id => @project.id,  :remote => true) do%>
-                                      <%= link_to user.username %>
+                                      <%= submit_tag user.username %>
                                       <% end %>
                                     </div>
                                       
