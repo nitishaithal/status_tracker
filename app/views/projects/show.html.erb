@@ -77,7 +77,33 @@
                             </ul>
                           </div>
                       </div>
-  </div>
+              </div>
+
+                <div class="chat-box">
+                <div class="panel panel-default">
+                <div id = "chat_panel" class="panel-heading"><b>Chat with members</b>
+                </div>
+
+                      <div class="panel-body p0">
+                         <ul class="user-list">
+                               <% @project.users.uniq.each do |user| %>
+                                  <li class="user-list-item">
+                                     
+                                    <span class="pull-left">
+                                    <%= image_tag(gravatar_url_for(user, "26"), alt: user.email, class: "") %>
+                                    </span> 
+                                    <div class="ml5 pull-left mt5">
+
+                                    <div>
+                                      <%= link_to user.username, controller: 'projects', action: 'chat', :id=> user, :project_id => @project.id %></div>
+                                    </div>
+                                  <span class="clearfix"></span>
+                                 </li>
+                              <% end %> 
+                            </ul>
+                          </div>
+                      </div>
+                    </div>
             </div>
            <div class="col-md-8  col-xs-12">
              <div class="well pt0 pb10">

@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
 	end
 	
 	def chat
-		render 'chat'
+		render :partial => "projects/chat"
 	end
 
 	private
