@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :intents
   match '/edit' => 'home#edit', :as => :edit, :via => [:get, :post]
   match ':controller(/:action(/:id))', :via => [:get, :post]
+
   #get 'projects/show'
   #match '/index' => 'posts#index', :as => :edit, :via => [:get, :post]
 end

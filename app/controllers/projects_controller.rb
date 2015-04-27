@@ -24,6 +24,7 @@ class ProjectsController < ApplicationController
 		@proj_users = @project.users
 		@users = User.where('id not in (?) ', @proj_users.map {|user| user.id })
 		#UserProject.create(user_id: @user.id, project_id: @project.id, admin: false )
+		
 	end
 
 	def edit
@@ -66,8 +67,10 @@ class ProjectsController < ApplicationController
 			redirect_to root_path
 	end
 	
-	def chat
-		render :partial => "projects/chat"
+	def chat_interface
+		respond_to do |format|
+  		 format.js
+ 		end
 	end
 
 	private

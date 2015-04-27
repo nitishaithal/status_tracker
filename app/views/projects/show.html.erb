@@ -87,6 +87,7 @@
                       <div class="panel-body p0">
                          <ul class="user-list">
                                <% @project.users.uniq.each do |user| %>
+                                  <%if current_user.username!= user.username%>
                                   <li class="user-list-item">
                                      
                                     <span class="pull-left">
@@ -94,11 +95,16 @@
                                     </span> 
                                     <div class="ml5 pull-left mt5">
 
-                                    <div>
-                                      <%= link_to user.username, controller: 'projects', action: 'chat', :id=> user, :project_id => @project.id %></div>
+                                    <div id ="div_id">
+                                      <%= form_tag({:action => 'chat_interface'}, :id => 'user',:project_id => @project.id,  :remote => true) do%>
+                                      <%= link_to user.username %>
+                                      <% end %>
+                                    </div>
+                                      
                                     </div>
                                   <span class="clearfix"></span>
                                  </li>
+                                 <% end %>
                               <% end %> 
                             </ul>
                           </div>
