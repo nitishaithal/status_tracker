@@ -1,5 +1,71 @@
-<h1>Chat</h1>
-<div class ="pull-left">
-<h1>Chat is between<br/>
-<%=@usr.username%><br/>and<br/><%= current_user.username%>
+<!doctype html>
+<html>
+<head>
+	
+	<script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+          <style>
+ #header-content {
+    position: absolute;
+    bottom: 5%;
+    left: 0%;
+  }
+
+</style>
+</head>
+<body>
+	
+<h3 align = 'center'> CHANNEL:Politics </h3><hr/>
+<!--	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	-->
+	<div id="chatHistory" class="table-bordered chatHistory"></div>
+	<div id="header-content">
+         <hr/>
+      <input type="text" id="nam" placeholder="Enter Name"/>
+	<input type="text" id="message" placeholder="Enter your message here"/>
+
+	<button id="sendButton" class="btn btn-primary sendButton">Send</button>
 </div>
+
+<!--	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<script type="text/javascript">
+		
+		(function() 
+			{ 
+			var publish_key = 'pub-c-39594782-c4b0-4fb3-80fe-74e262353bf6';
+			var subscribe_key = 'sub-c-7ae61028-e9dd-11e3-92e7-02ee2ddab7fe';
+			channel = 'Mychannelpolitics';
+			var username = 'sharat';//window.location.search.substring(1).split('=')[1];
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			pubnub =PUBNUB.init({
+				publish_key : publish_key,
+				subscribe_key : subscribe_key,
+				uuid : "sharat"
+			});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			pubnub.subscribe({
+				channel : channel,
+				callback : function(message) { 
+					$('#chatHistory')[0].innerHTML = message + '<br/>' + $('#chatHistory')[0].innerHTML; 
+				}
+			
+			});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			pubnub.bind('click', pubnub.$('sendButton'), function(e) { 
+				pubnub.publish({
+					channel : channel, 
+					message :$('#nam').val() + ':' + $('#message').val()
+				
+				});
+		 
+			});
+
+		})();
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	</script>
+
+
+</body>
+</html>
