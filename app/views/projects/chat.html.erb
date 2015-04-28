@@ -14,17 +14,19 @@
 </style>
 </head>
 <body>
-	
+	<h1><%=@user.username%></h1>
 <h3 align = 'center'> CHANNEL:Politics </h3><hr/>
 <!--	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	-->
 	<div id="chatHistory" class="table-bordered chatHistory"></div>
 	<div id="header-content">
-         <hr/>
-      <input type="text" id="nam" placeholder="Enter Name"/>
-	<input type="text" id="message" placeholder="Enter your message here"/>
+   	 <hr/>
+		<%= form_tag("/chat/sto", method: "get") do %>
+			  <%= text_field_tag 'message' %>
+    		<%= submit_tag "message" %>
+		<% end %>
 
-	<button id="sendButton" class="btn btn-primary sendButton">Send</button>
-</div>
+
+	</div>
 
 <!--	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
@@ -34,8 +36,8 @@
 			{ 
 			var publish_key = 'pub-c-39594782-c4b0-4fb3-80fe-74e262353bf6';
 			var subscribe_key = 'sub-c-7ae61028-e9dd-11e3-92e7-02ee2ddab7fe';
-			channel = 'Mychannelpolitics';
-			var username = 'sharat';//window.location.search.substring(1).split('=')[1];
+			channel = "<%= @key %>";
+			//var username = 'sharat';//window.location.search.substring(1).split('=')[1];
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			pubnub =PUBNUB.init({
 				publish_key : publish_key,
@@ -55,10 +57,11 @@
 			pubnub.bind('click', pubnub.$('sendButton'), function(e) { 
 				pubnub.publish({
 					channel : channel, 
-					message :$('#nam').val() + ':' + $('#message').val()
+					message : "<%= @user.username %> : " + $('#new_message').val()
 				
 				});
-		 
+
+				
 			});
 
 		})();
