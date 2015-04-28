@@ -94,13 +94,9 @@
                                     <%= image_tag(gravatar_url_for(user, "26"), alt: user.email, class: "") %>
                                     </span> 
                                     <div class="ml5 pull-left mt5">
-
-                                    <div id ="div_id">
-                                      <%= form_tag({:action => 'chat_interface'}, :id => 'user',:project_id => @project.id,  :remote => true) do%>
-                                      <%= submit_tag user.username %>
-                                      <% end %>
-                                    </div>
-                                      
+                                      <div id ="div_id">
+                                        <%=link_to user.username, controller: 'chat', action: 'start_conversation', :id=> user%>
+                                      </div>                                     
                                     </div>
                                   <span class="clearfix"></span>
                                  </li>

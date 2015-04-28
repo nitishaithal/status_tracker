@@ -67,10 +67,6 @@ class ProjectsController < ApplicationController
 			redirect_to root_path
 	end
 	
-	def chat_interface
-		render :partial => 'chat'
-	end
-
 	private
 
 	def project_params

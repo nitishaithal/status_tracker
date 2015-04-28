@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'chat/start_conversation'
+  
   get 'users/new'
 
   devise_for :users
