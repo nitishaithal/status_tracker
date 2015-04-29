@@ -14,17 +14,19 @@
 </style>
 </head>
 <body>
-	<h1><%=@user.username%></h1>
+	<h1><%=@key%></h1>
 <h3 align = 'center'> CHANNEL:Politics </h3><hr/>
 <!--	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	-->
 	<div id="chatHistory" class="table-bordered chatHistory"></div>
 	<div id="header-content">
    	 <hr/>
 		<%= form_tag("/chat/sto", method: "get") do %>
-			  <%= text_field_tag 'message' %>
-    		<%= submit_tag "message" %>
+			
+			<%= text_field_tag 'message' %>
+    		<%= submit_tag "message", :keys1 => @Key%>
 		<% end %>
 
+		
 
 	</div>
 

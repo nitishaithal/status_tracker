@@ -19,14 +19,15 @@ class ChatController < ApplicationController
 def sto
 	require "redis"
 	redis = Redis.new
-	keyis = params[:@key]
+	keyis = params[:key]
 	newmsg = params[:message]
 	redis.append(keyis, newmsg);
 	redirect_to root_path
-
+  puts "the value of the key is: "
+  puts params[:keys1]
 	#value = redis.get('foo');
-	#puts value
-  end
-
+	#puts end
+  #value
+end
 
 end
