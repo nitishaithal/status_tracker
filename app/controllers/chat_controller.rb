@@ -10,21 +10,24 @@ class ChatController < ApplicationController
   		@key = current_user.email+"_@_"+@user.email
   	end 
   	
-  	@messages = $redis.get(@key)
+  	@messages = $redis.get(@key).try(:split,";")
 
   	render template: "projects/chat"
 
   end
 
-def sto
+def create
 	require "redis"
 	redis = Redis.new
 	keyis = params[:key]
-	newmsg = params[:message]
+	newmsg = params[:message]+";"
+  @msg = params[:message]
+  @user = current_user
 	redis.append(keyis, newmsg);
 	redirect_to root_path
-  puts "the value of the key is: "
-  puts params[:keys1]
+  #puts "the value of the key is: "
+  #puts params[:keys]
+  @messages = $redis.get(@key).try(:split,";")
 	#value = redis.get('foo');
 	#puts end
   #value

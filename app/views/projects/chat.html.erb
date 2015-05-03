@@ -20,10 +20,10 @@
 	<div id="chatHistory" class="table-bordered chatHistory"></div>
 	<div id="header-content">
    	 <hr/>
-		<%= form_tag("/chat/sto", method: "get") do %>
-			
+		<%= form_tag("/chat/create", method: "post", remote: true) do %>
+			<%= hidden_field_tag 'key', @key %>
 			<%= text_field_tag 'message' %>
-    		<%= submit_tag "message", :keys1 => @Key%>
+    		<%= submit_tag "message"%>
 		<% end %>
 
 		
