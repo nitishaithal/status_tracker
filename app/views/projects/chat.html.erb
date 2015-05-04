@@ -19,10 +19,12 @@
 <!--	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	-->
 
 	<div id="chatHistory" class="table-bordered chatHistory">
-		<%  @str = $redis.get (@key)%>
+		<%@str = $redis.get (@key)%>
+		<% if @str != nil%>
 		<% @spliter = @str.split(";")%>
 		<% @spliter.each do |s| %>
 			<%= s %><br/>
+		<% end %>
 		<% end %>
 	</div>
 	<div id="header-content">
@@ -30,49 +32,10 @@
    		<%= form_tag("/chat/create", method: "post", remote: true) do %>
 			<%= hidden_field_tag 'key', @key %>
 			<%= text_field_tag 'message' %>
-    		<%= submit_tag "message", :onClick => "function();"%>
+    		<%= submit_tag "send"%>
 		<% end %>
 	</div>
-<!--	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-	<script type="text/javascript">
-		
-		(function() 
-			{ 
-			var publish_key = 'pub-c-39594782-c4b0-4fb3-80fe-74e262353bf6';
-			var subscribe_key = 'sub-c-7ae61028-e9dd-11e3-92e7-02ee2ddab7fe';
-			channel = "<%= @key %>";
-			//var username = 'sharat';//window.location.search.substring(1).split('=')[1];
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			pubnub =PUBNUB.init({
-				publish_key : publish_key,
-				subscribe_key : subscribe_key,
-				uuid : "sharat"
-			});
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			pubnub.subscribe({
-				channel : channel,
-				callback : function(message) { 
-					$('#chatHistory')[0].innerHTML = message + '<br/>' + $('#chatHistory')[0].innerHTML; 
-				}
-			
-			});
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-			pubnub.bind('click', pubnub.$('message'), function(e) { 
-				pubnub.publish({
-					channel : channel, 
-					message : "<%= @user.username %> : " + $('#new_message').val()
-				
-				});
-
-				
-			});
-
-		})();
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	</script>
 
 </body>
 </html>

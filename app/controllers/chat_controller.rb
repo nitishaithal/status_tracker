@@ -22,7 +22,6 @@ def create
 	redis = Redis.new
 	keyis = params[:key]
 	newmsg = params[:message]+";"
-
   @msg = params[:message]
   @user = current_user
 	redis.append(keyis, newmsg);
