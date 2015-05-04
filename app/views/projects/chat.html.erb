@@ -17,19 +17,22 @@
 	<h1><%=@key%></h1>
 <h3 align = 'center'> CHANNEL:Politics </h3><hr/>
 <!--	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	-->
-	<div id="chatHistory" class="table-bordered chatHistory"></div>
+
+	<div id="chatHistory" class="table-bordered chatHistory">
+		<%  @str = $redis.get (@key)%>
+		<% @spliter = @str.split(";")%>
+		<% @spliter.each do |s| %>
+			<%= s %><br/>
+		<% end %>
+	</div>
 	<div id="header-content">
    	 <hr/>
-		<%= form_tag("/chat/create", method: "post", remote: true) do %>
+   		<%= form_tag("/chat/create", method: "post", remote: true) do %>
 			<%= hidden_field_tag 'key', @key %>
 			<%= text_field_tag 'message' %>
-    		<%= submit_tag "message"%>
+    		<%= submit_tag "message", :onClick => "function();"%>
 		<% end %>
-
-		
-
 	</div>
-
 <!--	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 	<script type="text/javascript">
@@ -56,7 +59,7 @@
 			});
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-			pubnub.bind('click', pubnub.$('sendButton'), function(e) { 
+			pubnub.bind('click', pubnub.$('message'), function(e) { 
 				pubnub.publish({
 					channel : channel, 
 					message : "<%= @user.username %> : " + $('#new_message').val()
@@ -70,7 +73,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	</script>
-
 
 </body>
 </html>

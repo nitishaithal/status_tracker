@@ -1,6 +1,7 @@
 class ChatController < ApplicationController
  
   def start_conversation
+    require "redis"    
   	@user=User.find(params[:id])
   	@key = " "
   	@message ="+"
@@ -13,7 +14,7 @@ class ChatController < ApplicationController
   	@messages = $redis.get(@key).try(:split,";")
 
   	render template: "projects/chat"
-
+      
   end
 
 def create
@@ -21,16 +22,13 @@ def create
 	redis = Redis.new
 	keyis = params[:key]
 	newmsg = params[:message]+";"
+
   @msg = params[:message]
   @user = current_user
 	redis.append(keyis, newmsg);
-	redirect_to root_path
-  #puts "the value of the key is: "
-  #puts params[:keys]
+  puts @newmsg
   @messages = $redis.get(@key).try(:split,";")
-	#value = redis.get('foo');
-	#puts end
-  #value
+  redirect_to projects/chat
 end
 
 end
